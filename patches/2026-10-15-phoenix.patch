@@ -1,0 +1,81 @@
+diff --git a/docs/phoenix/cookbook/datasets-and-experiments/summarization.mdx b/docs/phoenix/cookbook/datasets-and-experiments/summarization.mdx
+index 8c348ed..578895c 100644
+--- a/docs/phoenix/cookbook/datasets-and-experiments/summarization.mdx
++++ b/docs/phoenix/cookbook/datasets-and-experiments/summarization.mdx
+@@ -362,20 +362,20 @@ async def summarize_article_anthropic(example: Example, prompt_template: str, mo
+     return message.content[0].text
+ 
+ 
+-claude_35_sonnet = "claude-3-5-sonnet-20240620"
+-task = partial(summarize_article_anthropic, prompt_template=template, model=claude_35_sonnet)
++claude_haiku = "claude-haiku-5-5"
++task = partial(summarize_article_anthropic, prompt_template=template, model=claude_haiku)
+ 
+ experiment_results = await px_client.experiments.run_experiment(
+     dataset=dataset,
+     task=task,
+     experiment_name="anthropic-few-shot",
+     experiment_description="anthropic",
+-    experiment_metadata={"vendor": "anthropic", "model": claude_35_sonnet},
++    experiment_metadata={"vendor": "anthropic", "model": claude_haiku},
+     evaluators=EVALUATORS,
+ )
+ ```
+ 
+-If your experiment does not produce more concise summaries, inspect the individual results. You may notice that some summaries from Claude 3.5 Sonnet start with a preamble such as:
++If your experiment does not produce more concise summaries, inspect the individual results. You may notice that some summaries from Claude start with a preamble such as:
+ 
+ ```python
+ Here is a concise 3-sentence summary of the article...
+diff --git a/docs/phoenix/evaluation/how-to-evals/configuring-the-llm.mdx b/docs/phoenix/evaluation/how-to-evals/configuring-the-llm.mdx
+index b2b3656..ae20e2b 100644
+--- a/docs/phoenix/evaluation/how-to-evals/configuring-the-llm.mdx
++++ b/docs/phoenix/evaluation/how-to-evals/configuring-the-llm.mdx
+@@ -181,7 +181,7 @@ from phoenix.evals import ClassificationEvaluator
+ 
+ llm = LLM(
+     provider="anthropic",
+-    model="claude-3-5-sonnet-20241022",
++    model="claude-haiku-5-5",
+     api_key="your-anthropic-api-key",
+     timeout=30.0,
+ )
+diff --git a/docs/phoenix/integrations/llm-providers/anthropic/anthropic-tracing.mdx b/docs/phoenix/integrations/llm-providers/anthropic/anthropic-tracing.mdx
+index 4406611..31884c0 100644
+--- a/docs/phoenix/integrations/llm-providers/anthropic/anthropic-tracing.mdx
++++ b/docs/phoenix/integrations/llm-providers/anthropic/anthropic-tracing.mdx
+@@ -26,7 +26,7 @@ import anthropic
+ client = anthropic.Anthropic()
+ 
+ message = client.messages.create(
+-    model="claude-3-5-sonnet-20240620",
++    model="claude-haiku-5-5",
+     max_tokens=1000,
+     messages=[
+         {
+diff --git a/docs/phoenix/tracing/concepts-tracing/otel-openinference/span-kinds.mdx b/docs/phoenix/tracing/concepts-tracing/otel-openinference/span-kinds.mdx
+index 2dd34c8..bcc37d6 100644
+--- a/docs/phoenix/tracing/concepts-tracing/otel-openinference/span-kinds.mdx
++++ b/docs/phoenix/tracing/concepts-tracing/otel-openinference/span-kinds.mdx
+@@ -82,7 +82,7 @@ A call to a large language model.
+ 
+ | Attribute | Description |
+ | :--- | :--- |
+-| `llm.model_name` | The model identifier (e.g., `gpt-4o`, `claude-3-5-sonnet-20241022`). |
++| `llm.model_name` | The model identifier (e.g., `gpt-4o`, `claude-haiku-5-5`). |
+ | `llm.provider` | The provider (e.g. `openai`, `anthropic`, `mistralai`). |
+ | `llm.system` | The underlying LLM system, when distinct from `provider`. |
+ | `llm.input_messages` | The chat history sent to the model. |
+diff --git a/packages/phoenix-evals/README.md b/packages/phoenix-evals/README.md
+index 3a21081..bc9d78a 100644
+--- a/packages/phoenix-evals/README.md
++++ b/packages/phoenix-evals/README.md
+@@ -115,7 +115,7 @@ from phoenix.evals.llm import LLM
+ llm = LLM(provider="openai", model="gpt-4o")
+ 
+ # Anthropic
+-llm = LLM(provider="anthropic", model="claude-3-5-sonnet-20241022")
++llm = LLM(provider="anthropic", model="claude-haiku-5-5")
+ 
+ # Google Gemini
+ llm = LLM(provider="google", model="gemini-1.5-pro")
