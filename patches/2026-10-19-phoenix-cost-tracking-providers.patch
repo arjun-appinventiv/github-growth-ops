@@ -1,0 +1,17 @@
+diff --git a/docs/phoenix/tracing/how-to-tracing/cost-tracking.mdx b/docs/phoenix/tracing/how-to-tracing/cost-tracking.mdx
+index 19ac018..adde524 100644
+--- a/docs/phoenix/tracing/how-to-tracing/cost-tracking.mdx
++++ b/docs/phoenix/tracing/how-to-tracing/cost-tracking.mdx
+@@ -66,7 +66,12 @@ Phoenix includes a comprehensive model pricing table with built-in support for p
+ * **Cerebras**: Llama, Qwen, and other Cerebras-hosted models
+ * **Fireworks AI**: Fireworks-hosted open-source and proprietary models
+ * **Groq**: Llama, Mixtral, Gemma, and other Groq-hosted models
++* **Meta**: Meta Muse models
++* **MiniMax**: MiniMax M2 and M3 models
++* **Mistral AI**: Mistral Large, Medium, Small, Codestral, Devstral, Magistral, and other Mistral models
+ * **Moonshot (Kimi)**: Moonshot Kimi models
++* **Together AI**: Llama, Qwen, DeepSeek, GLM, Kimi, and other Together-hosted models
++* **Z.ai**: GLM-4.x and GLM-5.x models
+ * **Other providers**: Additional models as they become available
+ 
+ ### Managing model prices
