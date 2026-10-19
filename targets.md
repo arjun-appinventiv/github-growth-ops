@@ -70,6 +70,7 @@ All projects were checked on 2026-10-15. Activity was measured from git history,
 - **Activity:**
   - Very high volume: 68 commits in the last 30 days, and many merges per day.
   - The maintainer often "salvages" (re-submits) contributor PRs rather than merging them directly.
+  - Re-checked 2026-10-19: 6 of 6 recent `type/docs` P3 issues were claimed or had a PR within hours to two days. Only a same-day pick is realistic here.
   - Docs issues use the `type/docs` label (about 247 open); P3 marks the small ones.
 - **Contribution rules:**
   - The CONTRIBUTING.md is long.
