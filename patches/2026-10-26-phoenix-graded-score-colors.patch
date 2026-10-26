@@ -1,0 +1,58 @@
+diff --git a/docs/phoenix/datasets-and-experiments/how-to-experiments/running-experiments.mdx b/docs/phoenix/datasets-and-experiments/how-to-experiments/running-experiments.mdx
+index 53bd2e8..1f8b6b3 100644
+--- a/docs/phoenix/datasets-and-experiments/how-to-experiments/running-experiments.mdx
++++ b/docs/phoenix/datasets-and-experiments/how-to-experiments/running-experiments.mdx
+@@ -462,3 +462,5 @@ Optimization direction is set by the evaluator output configuration:
+ - **Maximize**: higher scores indicate better outcomes (for example, faithfulness or correctness).
+ - **Minimize**: lower scores indicate better outcomes (for example, distance or error rate).
+ - **None**: no ordering (for example, categorical labels or freeform notes).
++
++Score colors are graded rather than binary. Phoenix compares each score with a pivot, which is the evaluator's threshold if one is set, or otherwise the midpoint of its score range. A score at the pivot is shown as neutral, and the color gets stronger as a score approaches the best or worst end of the range. See [Annotation configuration](/docs/phoenix/evaluation/server-evals/code-evaluators#annotation-configuration) for how the threshold and bounds set this scale.
+diff --git a/docs/phoenix/evaluation/server-evals/code-evaluators.mdx b/docs/phoenix/evaluation/server-evals/code-evaluators.mdx
+index 330090c..85cd893 100644
+--- a/docs/phoenix/evaluation/server-evals/code-evaluators.mdx
++++ b/docs/phoenix/evaluation/server-evals/code-evaluators.mdx
+@@ -59,7 +59,7 @@ From authoring to results, you'll work through five steps:
+ 
+ 1. **Create the evaluator** — From a dataset's **Evaluators** tab, choose **Add evaluator → Create new code evaluator**. Pick a language (Python or TypeScript) and a sandbox configuration. *(No sandbox configuration yet? Create one under [Settings → Sandboxes](/docs/phoenix/settings/sandboxes) — for local TypeScript, use the [Deno](/docs/phoenix/settings/sandboxes/deno) sandbox; for local Python, [WebAssembly](/docs/phoenix/settings/sandboxes/wasm).)*
+ 2. **Write `evaluate(...)`** — The editor opens pre-populated with an `evaluate(...)` function. Its parameters become the evaluator's inputs.
+-3. **Configure the annotation** — Pick an optimization direction (maximize vs. minimize) and, optionally, a threshold for pass/fail coloring.
++3. **Configure the annotation** — Pick an optimization direction (maximize vs. minimize) and, optionally, a threshold and score range that control how scores are colored.
+ 4. **Map inputs** — Bind each parameter to a path on the [evaluation parameters](/docs/phoenix/evaluation/server-evals/input-mapping#evaluation-parameters) (`input`, `output`, `reference`, `metadata`) or to a literal value.
+ 5. **Test, save, run** — Dry-run the evaluator against a dataset example in the test panel, save it, then run an experiment. Scores land on every new run automatically.
+ 
+@@ -122,8 +122,19 @@ The function returns an object with three optional fields:
+ An evaluator's annotation config is descriptive — it tells Phoenix how to interpret whatever your function returns, not what shape it must produce.
+ 
+ - **Optimization direction** — `maximize` or `minimize`, used to render trends correctly in experiment comparisons.
+-- **Lower / upper bound** *(optional)* — The expected numeric range for scores. Used to normalize values for visualization.
+-- **Threshold** *(optional)* — A numeric cutoff that splits scores into pass/fail for threshold-pivoted coloring in result views. Leave it unset if pass/fail isn't meaningful for your metric.
++- **Lower / upper bound** *(optional)* — The expected numeric range for scores. Phoenix uses it as the color scale: a score at the best bound gets the strongest "good" color, a score at the worst bound the strongest "bad" color. Scores outside the range are clamped to the nearest bound.
++- **Threshold** *(optional)* — The score that separates better results from worse ones. Leave it unset if no cutoff is meaningful for your metric.
++
++Result views color scores on a graded scale rather than as plain pass/fail. Phoenix compares each score with a pivot: the threshold if you set one, otherwise the midpoint of the lower and upper bounds.
++
++- A score exactly at the pivot is shown as **neutral**, with no color.
++- Scores on the better side of the pivot are shaded "good" and scores on the worse side "bad". The shade deepens as the score approaches the bound on that side.
++- If a side of the pivot has no bound, every score on that side gets the full color.
++- If you set neither a threshold nor both bounds, scores are shown without color.
++
++For example, with direction `maximize`, bounds `0` and `1`, and threshold `0.8`: a score of `0.8` is neutral, `0.9` is half-strength good, `1.0` is full-strength good, and `0.4` is half-strength bad.
++
++For simple pass/fail coloring, set a threshold and leave both bounds empty. Every score on the better side then gets the full "good" color and every score on the worse side the full "bad" color.
+ 
+ ## Sandbox Backends
+ 
+diff --git a/docs/phoenix/evaluation/server-evals/code-evaluators/json-distance.mdx b/docs/phoenix/evaluation/server-evals/code-evaluators/json-distance.mdx
+index 9fb9ad8..3330162 100644
+--- a/docs/phoenix/evaluation/server-evals/code-evaluators/json-distance.mdx
++++ b/docs/phoenix/evaluation/server-evals/code-evaluators/json-distance.mdx
+@@ -128,7 +128,7 @@ Continuous score:
+ |-------|-------|
+ | Score range | `0` (identical) to unbounded |
+ | Optimization direction | **minimize** |
+-| Threshold | Optional — e.g., `0` to color any non-exact match as a regression. |
++| Threshold | Optional — e.g., `0` to color any non-exact match as a regression. An exact match (score `0`) then sits at the threshold, so it is shown as neutral rather than as a good result. |
+ 
+ The categorical `label` is informational; the `score` is the primary signal.
+ 

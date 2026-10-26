@@ -26,6 +26,7 @@ All projects were checked on 2026-10-15. Activity was measured from git history,
   - Commits land on main daily.
   - The `documentation` label has about 46 open issues, including a weekly docs-gap audit written by a maintainer.
   - Outside fixes do get merged (for example, two from lx3133584 on 2026-10-15), although most merges come from staff.
+  - Re-checked 2026-10-26: Arjun's 2026-10-16 request on #16988 still has no maintainer reply after 10 days. Treat the "wait for confirmation" gate as slow here.
 - **Contribution rules (CONTRIBUTING.md):**
   - "Not actively accepting feature contributions." Small bug, reliability and maintenance fixes are welcome.
   - **An open issue is not an invitation:** wait for explicit maintainer confirmation before starting.
@@ -43,6 +44,7 @@ All projects were checked on 2026-10-15. Activity was measured from git history,
   - Commits within the last week.
   - About 10 of the last 25 merges came from outside contributors, including docs and sample PRs.
   - The `help wanted` label has 14 issues and `documentation` has 8. There is no `good first issue` label.
+  - Re-checked 2026-10-26: every `help wanted` or `documentation` issue I checked that is small enough already has a claimant or an open PR (#1806 → #1833, #889 → #950/#1880, #1126 → #1788, #1389 and #1494 claimed in comments).
 - **Contribution rules:**
   - CONTRIBUTING.md says community PRs are welcome.
   - Issues labelled `help wanted` + `ready for work` need no assignment.
@@ -57,6 +59,7 @@ All projects were checked on 2026-10-15. Activity was measured from git history,
   - Commits within the last week.
   - About 19 of the last 25 merges came from outside contributors, the best outsider responsiveness on this list.
   - There are 3 `good first issue` issues.
+  - Re-checked 2026-10-26: 10 open `good first issue` issues, but the four bug reports from 2026-10-23 (#23673, #23675, #23679, #23683) each arrived with the reporter's own PR (#23674, #23676, #23680, #23684). #21610 (HotpotQA file handles) was fixed by #22113 in July, so it is no longer an opportunity.
 - **Contribution rules:**
   - CONTRIBUTING.md describes per-package development under `llama-index-integrations/...` and `llama-index-core`.
   - Maintainers close duplicate PRs automatically.
