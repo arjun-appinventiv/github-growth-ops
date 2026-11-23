@@ -1,0 +1,36 @@
+diff --git a/docs/phoenix/tracing/how-to-tracing/cost-tracking.mdx b/docs/phoenix/tracing/how-to-tracing/cost-tracking.mdx
+index d8bc0bf..c860ae5 100644
+--- a/docs/phoenix/tracing/how-to-tracing/cost-tracking.mdx
++++ b/docs/phoenix/tracing/how-to-tracing/cost-tracking.mdx
+@@ -81,16 +81,23 @@ Phoenix prices [EMBEDDING spans](/docs/phoenix/tracing/concepts-tracing/otel-ope
+ 
+ ## Model pricing configuration
+ 
+-Phoenix includes a comprehensive model pricing table with built-in support for popular models from:
+-
+-* **OpenAI**: GPT-3.5, GPT-4, GPT-4 Turbo, GPT-4o, GPT-5, and newer models
+-* **Anthropic**: Claude 1.x, Claude 2.x, Claude 3.x, Claude 3.5, Claude 4.x models
+-* **Google**: Gemini 1.x, Gemini 2.x, Gemini 3.x models
++Phoenix includes a comprehensive model pricing table with built-in prices for models from:
++
++* **OpenAI**: GPT-3.5, GPT-4, GPT-4o, GPT-4.1, GPT-5, GPT-6, o-series reasoning models, and the `text-embedding-3` and `text-embedding-ada-002` embedding models
++* **Anthropic**: Claude 4.x and Claude 5.x models
++* **Amazon Bedrock**: Anthropic Claude (including Claude 3.x) and OpenAI models hosted on Bedrock, including regional and cross-region model IDs such as `us.anthropic.…` and `eu.anthropic.…`
++* **Google**: Gemini 2.x and Gemini 3.x models, and Gemini embedding models
++* **Mistral AI**: Mistral, Codestral, and other models served by the Mistral API, and Mistral embedding models
++* **Together AI**: Together-hosted open-weight models
+ * **Cerebras**: Llama, Qwen, and other Cerebras-hosted models
+-* **Fireworks AI**: Fireworks-hosted open-source and proprietary models
+-* **Groq**: Llama, Mixtral, Gemma, and other Groq-hosted models
++* **Groq**: GPT-OSS, Qwen, and other Groq-hosted models
+ * **Moonshot (Kimi)**: Moonshot Kimi models
+-* **Other providers**: Additional models as they become available
++* **Perplexity**: Sonar models
++* **Z.ai**: GLM models
++* **MiniMax**: MiniMax models
++* **Meta**: Muse models
++
++Model coverage changes as the table is updated (see below). For the exact list of built-in models, see **Settings** → **Models**, or the [bundled pricing table](https://github.com/Arize-ai/phoenix/blob/main/src/phoenix/server/cost_tracking/manifests/v1.json). Models that aren't in the table, such as older Claude models on the Anthropic API or Gemini 1.x, need a [custom model](#adding-a-custom-model).
+ 
+ ### Keeping built-in prices current
+ 
